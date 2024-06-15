@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import './upload.css';
@@ -18,6 +18,24 @@ const UploadPage = () => {
     rows: [{ srNo: '', items: '', quantity: '', ratePerPiece: '' }],
     hsn: ''
   });
+
+  const [accessToken, setAccessToken] = useState(null);
+
+  useEffect(() => {
+    // Function to parse URL parameters
+    const getAccessTokenFromUrl = () => {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('access_token');
+    };
+
+    // Get access token from URL
+    const token = getAccessTokenFromUrl();
+
+    // Set access token in state
+    if (token) {
+      setAccessToken(token);
+    }
+  }, []);
 
   const [selectedCustomer, setSelectedCustomer] = useState('');
 
@@ -88,7 +106,6 @@ const UploadPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const accessToken = JSON.parse(localStorage.getItem('accessToken')).token;
 
       const updates = [
         { range: 'Sheet1!B5', values: [[uploadData.invoiceNumber]] },
@@ -135,7 +152,6 @@ const UploadPage = () => {
 
   const downloadFromGoogleSheets = async () => {
     try {
-      const accessToken = JSON.parse(localStorage.getItem('accessToken')).token;
 
       const response = await axios.get(
         `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/Sheet1`,
