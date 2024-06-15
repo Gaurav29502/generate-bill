@@ -22,9 +22,10 @@ const UploadPage = () => {
   const [accessToken, setAccessToken] = useState(null);
 
   useEffect(() => {
-    // Function to parse URL parameters
+    // Function to parse URL parameters from fragment identifier
     const getAccessTokenFromUrl = () => {
-      const params = new URLSearchParams(window.location.search);
+      const hash = window.location.hash.substring(1); // Remove the leading #
+      const params = new URLSearchParams(hash);
       return params.get('access_token');
     };
 
@@ -34,6 +35,7 @@ const UploadPage = () => {
     // Set access token in state
     if (token) {
       setAccessToken(token);
+      console.log(token)
     }
   }, []);
 
