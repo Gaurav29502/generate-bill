@@ -21,7 +21,7 @@ const LoginPage = () => {
       }
 
       // If not authenticated or token expired, initiate OAuth flow
-      const authUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${CLIENT_ID}&redirect_uri=http://localhost:3000/upload&scope=${encodeURIComponent(SCOPES)}&response_type=token`;
+      const authUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${CLIENT_ID}&redirect_uri=https://generate-bill-fit90ugro-gaurav29502s-projects.vercel.app/upload&scope=${encodeURIComponent(SCOPES)}&response_type=token`;
       window.location.href = authUrl;
     };
 
